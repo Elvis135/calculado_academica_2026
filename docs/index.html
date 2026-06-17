@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora Académica 2026</title>
+
+  <style>
+    :root {
+      --azul: #023052;
+      --amarillo: #ffcc00;
+      --blanco: #ffffff;
+      --gris: #f4f7fb;
+      --texto: #1f2937;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(255, 204, 0, 0.25), transparent 35%),
+        linear-gradient(135deg, #023052 0%, #011d33 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      color: var(--blanco);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1050px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .content {
+      animation: fadeInLeft 0.8s ease;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255, 204, 0, 0.15);
+      color: var(--amarillo);
+      border: 1px solid rgba(255, 204, 0, 0.4);
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      line-height: 1.05;
+      margin-bottom: 22px;
+      letter-spacing: -1px;
+    }
+
+    h1 span {
+      color: var(--amarillo);
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.86);
+      max-width: 560px;
+      margin-bottom: 34px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: var(--amarillo);
+      color: var(--azul);
+      text-decoration: none;
+      padding: 16px 28px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 17px;
+      box-shadow: 0 14px 30px rgba(255, 204, 0, 0.28);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 38px rgba(255, 204, 0, 0.38);
+    }
+
+    .download-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    .info {
+      margin-top: 22px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .phone-card {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(18px);
+      border-radius: 32px;
+      padding: 28px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+      animation: fadeInRight 0.8s ease;
+    }
+
+    .phone {
+      background: #071f35;
+      border-radius: 34px;
+      padding: 18px;
+      border: 8px solid rgba(255, 255, 255, 0.12);
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(255, 204, 0, 0.18);
+      right: -80px;
+      top: -80px;
+    }
+
+    .app-header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--blanco);
+    }
+
+    .app-title {
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--amarillo);
+      display: grid;
+      place-items: center;
+      color: var(--azul);
+      font-weight: 900;
+    }
+
+    .screen-content {
+      position: relative;
+      z-index: 1;
+      margin-top: 60px;
+    }
+
+    .mini-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mini-card strong {
+      display: block;
+      color: var(--amarillo);
+      font-size: 28px;
+      margin-bottom: 4px;
+    }
+
+    .mini-card span {
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 14px;
+    }
+
+    .bottom-bar {
+      position: relative;
+      z-index: 1;
+      background: var(--amarillo);
+      color: var(--azul);
+      border-radius: 18px;
+      padding: 16px;
+      text-align: center;
+      font-weight: 900;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 16px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 13px;
+      padding: 0 16px;
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @media (max-width: 850px) {
+      body {
+        align-items: flex-start;
+      }
+
+      .container {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      p {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .buttons {
+        justify-content: center;
+      }
+
+      .phone-card {
+        max-width: 380px;
+        margin: 0 auto;
+      }
+
+      footer {
+        position: static;
+        margin-top: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <section class="content">
+      <div class="badge">Nueva versión disponible</div>
+
+      <h1>
+        Calculadora <span>Académica</span> 2026
+      </h1>
+
+      <p>
+        Descarga la aplicación Android para calcular y organizar tus resultados académicos
+        de manera rápida, moderna y sencilla.
+      </p>
+
+      <div class="buttons">
+        <a
+          class="download-btn"
+          href="https://github.com/Elvis135/calculado_academica_2026/releases/latest/download/app-release.apk"
+          download
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 20h14v-2H5v2Zm7-18v12.17l4.59-4.58L18 11l-6 6-6-6 1.41-1.41L11 14.17V2h1Z"/>
+          </svg>
+          Descargar APK
+        </a>
+      </div>
+
+      <div class="info">
+        Archivo APK oficial desde GitHub Releases.
+      </div>
+    </section>
+
+    <section class="phone-card">
+      <div class="phone">
+        <div class="app-header">
+          <div class="app-title">Calculadora Académica</div>
+          <div class="circle">A+</div>
+        </div>
+
+        <div class="screen-content">
+          <div class="mini-card">
+            <strong>2026</strong>
+            <span>Versión académica actualizada</span>
+          </div>
+
+          <div class="mini-card">
+            <strong>APK</strong>
+            <span>Instalación directa para Android</span>
+          </div>
+
+          <div class="mini-card">
+            <strong>Fácil</strong>
+            <span>Diseño simple, moderno y práctico</span>
+          </div>
+        </div>
+
+        <div class="bottom-bar">
+          Lista para descargar
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Calculadora Académica. Todos los derechos reservados.
+  </footer>
+</body>
+</html>
